@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Live Scanner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safety Com's Live Scanner</title>
 
 <style>
     body {
@@ -16,9 +17,10 @@
         color: #e6e6e6;
     }
 
+    /* Responsive container */
     .scanner-box {
-        width: 360px;
-        height: 420px;
+        width: 90%;
+        max-width: 380px;
         background: #0a0a0a;
         border-radius: 18px;
         box-shadow:
@@ -29,6 +31,13 @@
         flex-direction: column;
         justify-content: space-between;
         box-sizing: border-box;
+    }
+
+    @media (max-width: 480px) {
+        .scanner-box {
+            padding: 18px;
+            max-width: 95%;
+        }
     }
 
     .title {
@@ -71,7 +80,6 @@
             inset 0 0 12px rgba(255, 140, 0, 0.2);
     }
 
-    /* Volume Row */
     .volume-row {
         display: flex;
         align-items: center;
@@ -84,7 +92,6 @@
         color: #d87a1a;
     }
 
-    /* Slider */
     input[type="range"] {
         width: 100%;
         -webkit-appearance: none;
@@ -110,7 +117,6 @@
         box-shadow: 0 0 6px rgba(216, 122, 26, 0.6);
     }
 
-    /* LED Indicator */
     .led {
         width: 16px;
         height: 16px;
@@ -162,7 +168,6 @@
         100% { opacity: 1; }
     }
 
-    /* Flashing red text for failure */
     @keyframes flashRedText {
         0% { opacity: 1; }
         50% { opacity: 0.3; }
@@ -212,7 +217,6 @@ let isPlaying = false;
 let reconnectTimer = null;
 let audioContext, analyser, source;
 
-// Slider fill
 function updateSliderFill() {
     const percent = slider.value * 100 + "%";
     slider.style.setProperty("--value", percent);
@@ -220,12 +224,10 @@ function updateSliderFill() {
 slider.addEventListener("input", updateSliderFill);
 window.addEventListener("load", updateSliderFill);
 
-// LED state helper
 function setLED(state) {
     led.className = "led " + state;
 }
 
-// Audio analyzer
 function setupAnalyzer() {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     analyser = audioContext.createAnalyser();
@@ -319,7 +321,6 @@ audio.addEventListener("error", () => {
     }, 4000);
 });
 
-// Initial LED state
 setLED("red");
 statusEl.style.color = "red";
 </script>
