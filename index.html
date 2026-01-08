@@ -1,331 +1,385 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POST Fayco Live Scanner</title>
+<!-- saved from url=(0049)file:///C:/Users/User/Desktop/POST%20SCANNER.html -->
+<html lang="en" style="--scale: 1;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>POST Scanner - Fayette County, Ohio</title>
+  <style>
+    :root {
+      --scale: 1;
+    }
 
-<style>
     body {
-        margin: 0;
-        background: #000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        font-family: "Segoe UI", sans-serif;
-        color: #e6e6e6;
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #eee;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* Responsive container */
-    .scanner-box {
-        width: 90%;
-        max-width: 380px;
-        background: #0a0a0a;
-        border-radius: 18px;
-        box-shadow:
-            0 0 25px rgba(0, 0, 0, 0.9),
-            inset 0 0 18px rgba(255, 140, 0, 0.08);
-        padding: 22px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        box-sizing: border-box;
+    .scanner-scale-wrapper {
+      transform: scale(var(--scale));
+      transform-origin: top center;
+      width: 880px;
     }
 
-    @media (max-width: 480px) {
-        .scanner-box {
-            padding: 18px;
-            max-width: 95%;
-        }
+    .scanner-shell {
+      background: #3b3b3b;
+      border-radius: 14px;
+      padding: 18px 22px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.8);
+      width: 880px;
+      border: 2px solid #555;
+      display: flex;
+      flex-direction: row;
+      gap: 18px;
     }
 
-    .title {
-        font-size: 18px;
-        text-align: center;
-        margin-bottom: 4px;
-        color: #f0f0f0;
+    .logo-column {
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-right: 2px solid #2a2a2a;
+      padding-right: 14px;
     }
 
-    .subtitle {
-        font-size: 12px;
-        text-align: center;
-        color: #b3b3b3;
-        margin-bottom: 10px;
+    .team-logo img {
+      width: 140px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.7);
     }
 
-    .play-btn {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        border: none;
-        background: #1a1a1a;
-        color: #f0f0f0;
-        font-size: 28px;
-        cursor: pointer;
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        box-shadow:
-            0 0 12px rgba(255, 140, 0, 0.25),
-            inset 0 0 10px rgba(255, 140, 0, 0.15);
-        transition: 0.15s ease;
+    .brand-text {
+      margin-top: 10px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #ddd;
+      text-align: center;
     }
 
-    .play-btn:hover {
-        transform: scale(1.05);
-        box-shadow:
-            0 0 16px rgba(255, 140, 0, 0.35),
-            inset 0 0 12px rgba(255, 140, 0, 0.2);
+    .screen-column {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .volume-row {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 10px;
+    .screen-frame {
+      background: #050505;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid #222;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.9);
     }
 
-    .volume-icon {
-        font-size: 20px;
-        color: #d87a1a;
+    .screen-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 11px;
+      color: #b0ffb0;
     }
 
-    input[type="range"] {
-        width: 100%;
-        -webkit-appearance: none;
-        height: 5px;
-        border-radius: 999px;
-        background: linear-gradient(
-            to right,
-            #d87a1a 0%,
-            #d87a1a var(--value, 100%),
-            #333 var(--value, 100%),
-            #333 100%
-        );
-        outline: none;
+    .screen-header-left {
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #f5f5f5;
     }
 
-    input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: #d87a1a;
-        cursor: pointer;
-        box-shadow: 0 0 6px rgba(216, 122, 26, 0.6);
+    .screen-header-right {
+      font-size: 10px;
+      color: #9fd3ff;
     }
 
-    .led {
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        margin: 10px auto 0 auto;
-        background: red;
-        box-shadow: 0 0 8px rgba(255,0,0,0.7);
-        transition: background 0.2s ease, box-shadow 0.2s ease;
+    .screen-subtitle {
+      font-size: 11px;
+      color: #ffeb99;
+      margin-bottom: 4px;
     }
 
-    .led.green-ring {
-        background: radial-gradient(circle, #555 40%, #00ff00 45%);
-        box-shadow: 0 0 8px rgba(0,255,0,0.4);
+    .screen-line {
+      font-size: 11px;
+      color: #d0d0d0;
+      margin-bottom: 2px;
     }
 
-    .led.green-pulse {
-        background: #00ff00;
-        animation: pulseGreen 0.8s infinite;
-        box-shadow: 0 0 12px rgba(0,255,0,0.8);
+    .screen-line-strong {
+      font-size: 12px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 4px;
     }
 
-    @keyframes pulseGreen {
-        0% { box-shadow: 0 0 6px rgba(0,255,0,0.4); }
-        50% { box-shadow: 0 0 14px rgba(0,255,0,1); }
-        100% { box-shadow: 0 0 6px rgba(0,255,0,0.4); }
+    .freq-bar {
+      margin-top: 4px;
+      margin-bottom: 6px;
+      font-size: 10px;
+      color: #9fd3ff;
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
     }
 
-    .led.yellow-flash {
-        background: yellow;
-        animation: flashYellow 0.8s infinite;
-        box-shadow: 0 0 10px rgba(255,255,0,0.8);
+    .meter-wrapper {
+      background: #000;
+      border-radius: 6px;
+      padding: 6px;
+      border: 1px solid #333;
+      margin-top: 4px;
     }
 
-    @keyframes flashYellow {
-        0% { opacity: 1; }
-        50% { opacity: 0.3; }
-        100% { opacity: 1; }
+    #meterCanvas {
+      width: 100%;
+      height: 60px;
+      display: block;
+      border-radius: 4px;
+      background: #000;
     }
 
-    .led.red-flash {
-        background: red;
-        animation: flashRed 0.8s infinite;
-        box-shadow: 0 0 12px rgba(255,0,0,1);
+    .hard-buttons-row {
+      margin-top: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 18px;
     }
 
-    @keyframes flashRed {
-        0% { opacity: 1; }
-        50% { opacity: 0.3; }
-        100% { opacity: 1; }
+    .hard-button {
+      background: linear-gradient(to bottom, #555, #2f2f2f);
+      border-radius: 6px;
+      padding: 8px 22px;
+      border: 1px solid #111;
+      box-shadow:
+        0 2px 0 #000,
+        0 0 6px rgba(0,0,0,0.8);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #f5f5f5;
+      cursor: pointer;
+      min-width: 90px;
+      text-align: center;
     }
 
-    @keyframes flashRedText {
-        0% { opacity: 1; }
-        50% { opacity: 0.3; }
-        100% { opacity: 1; }
+    .hard-button.primary {
+      background: linear-gradient(to bottom, #f5a623, #b86b10);
+      color: #111;
     }
 
-    .status {
-        text-align: center;
-        font-size: 12px;
-        margin-top: 8px;
+    .status-bar {
+      margin-top: 6px;
+      font-size: 10px;
+      color: #b0ffb0;
+      display: flex;
+      justify-content: space-between;
     }
-</style>
+
+    .status-label {
+      color: #9fd3ff;
+    }
+
+    .status span {
+      color: #4caf50;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="scanner-box">
-    <div>
-        <div class="title">Fayette County Fire/EMS Paging</div>
-        <div class="subtitle">POST Feed • Live</div>
+  <div class="scanner-scale-wrapper">
+    <div class="scanner-shell">
+      <div class="logo-column">
+        <div class="team-logo">
+          <img src="./POST SCANNER_files/611253458_858965963597570_534041075424432167_n.jpg" alt="Priority One Safety Team Logo">
+        </div>
+        <div class="brand-text">
+          Scanner Radio Interface
+        </div>
+      </div>
+
+      <div class="screen-column">
+        <div class="screen-frame">
+          <div class="screen-header">
+            <div class="screen-header-left">
+              Priority One Safety Team Scanner Radio
+            </div>
+            <div class="screen-header-right">
+              Status: Connected&nbsp;&nbsp;
+              Date: <span id="dateDisplay">01/08/2026</span>&nbsp;&nbsp;
+              Time: <span id="timeDisplay">15:05:23</span> EDT
+            </div>
+          </div>
+
+          <div class="screen-subtitle">
+            Fayette County, Ohio
+          </div>
+          <div class="screen-line-strong">
+            Fire - EMS - Pager System
+          </div>
+          <div class="screen-line">
+            Fayette County Ohio - Live Feed
+          </div>
+
+          <div class="freq-bar">
+            
+          </div>
+
+          <div class="meter-wrapper">
+            <canvas id="meterCanvas" width="627" height="60"></canvas>
+          </div>
+
+          <div class="status-bar">
+            
+            <div class="status">Status: <span id="statusText" style="color: rgb(76, 175, 80);">Live</span></div>
+          </div>
+        </div>
+
+        <div class="hard-buttons-row">
+          <button class="hard-button primary" id="playPauseBtn">Play</button>
+          <button class="hard-button" id="muteBtn">Mute</button>
+          <button class="hard-button" id="resetViewBtn">Reload</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <button id="playPause" class="play-btn">▶</button>
-
-    <div id="led" class="led"></div>
-
-    <div class="volume-row">
-        <div class="volume-icon">🔊</div>
-        <input id="volumeSlider" type="range" min="0" max="1" step="0.01" value="1">
-    </div>
-
-    <div id="status" class="status">Safety Com's Offline</div>
-</div>
-
-<audio id="scannerAudio" preload="none" crossorigin="anonymous"></audio>
-
-<script>
-const STREAM_URL = "https://listen.broadcastify.com/tc2gdnrwpqbs384.mp3?nc=54264&xan=xtf9912b41c";
-
-const audio = document.getElementById("scannerAudio");
-const playPauseBtn = document.getElementById("playPause");
-const statusEl = document.getElementById("status");
-const slider = document.getElementById("volumeSlider");
-const led = document.getElementById("led");
-
-let isPlaying = false;
-let reconnectTimer = null;
-let audioContext, analyser, source;
-
-function updateSliderFill() {
-    const percent = slider.value * 100 + "%";
-    slider.style.setProperty("--value", percent);
-}
-slider.addEventListener("input", updateSliderFill);
-window.addEventListener("load", updateSliderFill);
-
-function setLED(state) {
-    led.className = "led " + state;
-}
-
-function setupAnalyzer() {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    analyser = audioContext.createAnalyser();
-    source = audioContext.createMediaElementSource(audio);
-    source.connect(analyser);
-    analyser.connect(audioContext.destination);
-    analyser.fftSize = 256;
-}
-
-function monitorAudio() {
-    const data = new Uint8Array(analyser.frequencyBinCount);
-
-    function check() {
-        analyser.getByteFrequencyData(data);
-        let volume = data.reduce((a, b) => a + b) / data.length;
-
-        if (!isPlaying) return;
-
-        if (volume > 20) {
-            setLED("green-pulse");
-        } else {
-            setLED("green-ring");
-        }
-
-        requestAnimationFrame(check);
+  <audio id="scanner" crossorigin="anonymous">
+    <source src="https://listen.broadcastify.com/smty4fqg3nv2bxh.mp3?nc=629&xan=xtf9912b41c" type="audio/mpeg">
+  </audio>
+  <script>
+    function scaleScanner() {
+      const baseWidth = 880;
+      const available = window.innerWidth;
+      const scale = Math.min(1, available / baseWidth);
+      document.documentElement.style.setProperty("--scale", scale);
     }
-    check();
-}
+    window.addEventListener("resize", scaleScanner);
+    scaleScanner();
 
-async function startStream() {
-    try {
-        setLED("yellow-flash");
-        statusEl.textContent = "Safety Com's Offline";
-        statusEl.style.color = "red";
-        statusEl.style.animation = "none";
+    function updateDateTime() {
+      const now = new Date();
+      const options = { timeZone: "America/New_York", hour12: false };
+      const est = new Date(now.toLocaleString("en-US", options));
 
-        audio.src = STREAM_URL;
+      const month = String(est.getMonth() + 1).padStart(2, "0");
+      const day = String(est.getDate()).padStart(2, "0");
+      const year = est.getFullYear();
+
+      const hours = String(est.getHours()).padStart(2, "0");
+      const minutes = String(est.getMinutes()).padStart(2, "0");
+      const seconds = String(est.getSeconds()).padStart(2, "0");
+
+      document.getElementById("dateDisplay").textContent = `${month}/${day}/${year}`;
+      document.getElementById("timeDisplay").textContent = `${hours}:${minutes}:${seconds}`;
+    }
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+
+    const audio = document.getElementById("scanner");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const muteBtn = document.getElementById("muteBtn");
+    const resetViewBtn = document.getElementById("resetViewBtn");
+    const statusText = document.getElementById("statusText");
+
+    const canvas = document.getElementById("meterCanvas");
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      canvas.width = canvas.clientWidth;
+      canvas.height = canvas.clientHeight;
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    let audioContext = null;
+    let analyser = null;
+    let dataArray = null;
+    let meterRunning = false;
+
+    function setupAudio() {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const source = audioContext.createMediaElementSource(audio);
+
+      analyser = audioContext.createAnalyser();
+      analyser.fftSize = 256;
+
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+    }
+
+    function drawMeter() {
+      if (!meterRunning) return;
+      requestAnimationFrame(drawMeter);
+
+      analyser.getByteFrequencyData(dataArray);
+
+      const width = canvas.width;
+      const height = canvas.height;
+
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, 0, width, height);
+
+      const barCount = 20;
+      const barWidth = width / barCount - 4;
+
+      for (let i = 0; i < barCount; i++) {
+        const v = dataArray[i] / 255;
+        const barHeight = v * height;
+
+        let color = "green";
+        if (v > 0.6) color = "yellow";
+        if (v > 0.8) color = "red";
+
+        ctx.fillStyle = color;
+        ctx.fillRect(i * (barWidth + 4), height - barHeight, barWidth, barHeight);
+      }
+    }
+
+    playPauseBtn.addEventListener("click", async () => {
+      if (!audioContext) setupAudio();
+
+      if (audio.paused) {
         await audio.play();
+        meterRunning = true;
+        drawMeter();
+        playPauseBtn.textContent = "Pause";
+        statusText.textContent = "Live";
+        statusText.style.color = "#4caf50";
+      } else {
+        audio.pause();
+        meterRunning = false;
+        playPauseBtn.textContent = "Play";
+        statusText.textContent = "Paused";
+        statusText.style.color = "#aaa";
+      }
+    });
 
-        if (!audioContext) setupAnalyzer();
-        monitorAudio();
+    muteBtn.addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      muteBtn.textContent = audio.muted ? "Unmute" : "Mute";
+    });
 
-        isPlaying = true;
-        playPauseBtn.textContent = "⏸";
+    resetViewBtn.addEventListener("click", () => {
+      meterRunning = false;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      audio.pause();
+      playPauseBtn.textContent = "Play";
+      statusText.textContent = "Idle";
+      statusText.style.color = "#b0ffb0";
+    });
+  </script>
 
-        statusEl.textContent = "Safety Com's Activated";
-        statusEl.style.color = "#00ff00";
-        statusEl.style.animation = "none";
-
-        setLED("green-ring");
-
-    } catch (err) {
-        statusEl.textContent = "Safety Com's Signal Failure";
-        statusEl.style.color = "red";
-        statusEl.style.animation = "flashRedText 0.8s infinite";
-        setLED("red-flash");
-    }
-}
-
-function stopStream() {
-    audio.pause();
-    isPlaying = false;
-    playPauseBtn.textContent = "▶";
-
-    statusEl.textContent = "Safety Com's on Standby";
-    statusEl.style.color = "#e6e6e6";
-    statusEl.style.animation = "none";
-
-    setLED("red");
-}
-
-playPauseBtn.addEventListener("click", () => {
-    if (isPlaying) stopStream();
-    else startStream();
-});
-
-slider.addEventListener("input", () => {
-    audio.volume = slider.value;
-});
-
-audio.addEventListener("error", () => {
-    statusEl.textContent = "Safety Com's Reconnecting";
-    statusEl.style.color = "yellow";
-    statusEl.style.animation = "none";
-
-    setLED("yellow-flash");
-
-    if (reconnectTimer) clearTimeout(reconnectTimer);
-    reconnectTimer = setTimeout(() => {
-        if (isPlaying) startStream();
-    }, 4000);
-});
-
-setLED("red");
-statusEl.style.color = "red";
-</script>
-
-</body>
-</html>
-
-
+</body></html>
